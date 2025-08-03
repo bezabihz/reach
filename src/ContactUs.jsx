@@ -36,10 +36,10 @@ const ContactUs = () => {
   return (
     <Box 
       sx={{ 
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        alignItems: 'center',
         py: { xs: 2, sm: 4 }
       }}
     >

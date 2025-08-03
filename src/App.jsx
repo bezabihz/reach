@@ -1,7 +1,6 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CssBaseline, AppBar, Toolbar, Typography, Button, Container, Box } from '@mui/material';
+import { CssBaseline, Typography, Button, Container, Box } from '@mui/material';
 import ContactUs from './ContactUs';
 
 const theme = createTheme({
@@ -15,108 +14,79 @@ const theme = createTheme({
   },
 });
 
-function Home() {
-  return (
-    <Box 
-      sx={{ 
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        py: { xs: 2, sm: 4 }
-      }}
-    >
-      <Container maxWidth="md" sx={{ textAlign: 'center', px: { xs: 2, sm: 3 } }}>
-        <Typography 
-          variant="h2" 
-          component="h1" 
-          gutterBottom
-          sx={{
-            fontSize: { xs: '2.5rem', sm: '3rem', md: '3.75rem' },
-            mb: { xs: 2, sm: 3 }
-          }}
-        >
-          Welcome to Our SPA
-        </Typography>
-        <Typography 
-          variant="h5" 
-          color="text.secondary" 
-          paragraph
-          sx={{
-            fontSize: { xs: '1.125rem', sm: '1.25rem', md: '1.5rem' },
-            mb: { xs: 3, sm: 4 },
-            maxWidth: '600px',
-            mx: 'auto'
-          }}
-        >
-          A simple React single page application built with Vite and Material-UI
-        </Typography>
-        <Button 
-          variant="contained" 
-          size="large" 
-          component={Link} 
-          to="/contact" 
-          sx={{ 
-            mt: 3,
-            px: { xs: 3, sm: 4 },
-            py: { xs: 1.5, sm: 2 },
-            fontSize: { xs: '1rem', sm: '1.1rem' }
-          }}
-        >
-          Contact Us
-        </Button>
-      </Container>
-    </Box>
-  );
-}
-
 function App() {
+  const [showContact, setShowContact] = useState(false);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <AppBar position="static">
-          <Toolbar sx={{ px: { xs: 1, sm: 2 } }}>
+      <Box 
+        sx={{ 
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          px: { xs: 2, sm: 3 }
+        }}
+      >
+        {!showContact ? (
+          <Container maxWidth="md" sx={{ textAlign: 'center' }}>
             <Typography 
-              variant="h6" 
-              component="div" 
-              sx={{ 
-                flexGrow: 1,
-                fontSize: { xs: '1.1rem', sm: '1.25rem' }
+              variant="h2" 
+              component="h1" 
+              gutterBottom
+              sx={{
+                fontSize: { xs: '2.5rem', sm: '3rem', md: '3.75rem' },
+                mb: { xs: 2, sm: 3 }
               }}
             >
-              React SPA
+              Welcome to Our SPA
+            </Typography>
+            <Typography 
+              variant="h5" 
+              color="text.secondary" 
+              paragraph
+              sx={{
+                fontSize: { xs: '1.125rem', sm: '1.25rem', md: '1.5rem' },
+                mb: { xs: 3, sm: 4 },
+                maxWidth: '600px',
+                mx: 'auto'
+              }}
+            >
+              A simple React single page application built with Vite and Material-UI
             </Typography>
             <Button 
-              color="inherit" 
-              component={Link} 
-              to="/"
+              variant="contained" 
+              size="large" 
+              onClick={() => setShowContact(true)}
               sx={{ 
-                fontSize: { xs: '0.85rem', sm: '0.875rem' },
-                px: { xs: 1, sm: 2 }
+                mt: 3,
+                px: { xs: 3, sm: 4 },
+                py: { xs: 1.5, sm: 2 },
+                fontSize: { xs: '1rem', sm: '1.1rem' }
               }}
             >
-              Home
+              Contact Us
             </Button>
-            <Button 
-              color="inherit" 
-              component={Link} 
-              to="/contact"
-              sx={{ 
-                fontSize: { xs: '0.85rem', sm: '0.875rem' },
-                px: { xs: 1, sm: 2 }
+          </Container>
+        ) : (
+          <Box sx={{ width: '100%', position: 'relative' }}>
+            <Button
+              onClick={() => setShowContact(false)}
+              sx={{
+                position: 'absolute',
+                top: { xs: -10, sm: -20 },
+                left: { xs: 10, sm: 20 },
+                zIndex: 10
               }}
             >
-              Contact
+              ← Back to Home
             </Button>
-          </Toolbar>
-        </AppBar>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<ContactUs />} />
-        </Routes>
-      </Router>
+            <ContactUs />
+          </Box>
+        )}
+      </Box>
     </ThemeProvider>
   )
 }
